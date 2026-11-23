@@ -166,19 +166,19 @@ ${mid('II',32)}${mid('III',28)}${mid('IV',28)}${mid('V',28)}
 <tr><td colspan="2"><b>VIII.</b> PERHATIAN :<br>PPK yang menerbitkan SPPD, pegawai yang melakukan perjalanan dinas, para pejabat yang mengesahkan tanggal berangkat/tiba serta bendahara pengeluaran bertanggung jawab berdasarkan peraturan-peraturan Keuangan Negara apabila Negara menderita rugi akibat kesalahan, kelalaian dan kealpaannya.</td></tr></table>`}
 function prev(id){const s=D.spd.find(x=>x.id===id),p=D.peg.find(x=>x.id===s.peg)||{},c=D.set;const sg=signer(s,'sp'),jl=sg.k==='kepala'?'Pejabat Pembuat Komitmen':sg.jab;let days=Math.round((new Date(s.tk)-new Date(s.tb))/864e5)+1;if(!(days>=1&&days<3650))days=1;
 const ik=(s.ikut||[]).map(i=>D.peg.find(x=>x.id===i)).filter(Boolean);let rows='';for(let i=0;i<Math.max(ik.length,5);i++){const q=ik[i];rows+=`<tr><td>${i+1}. ${q?esc(q.nama):'&nbsp;'}</td><td>${q?esc(q.nip):''}</td><td></td></tr>`}
-const r=(n,l,v)=>`<tr><td class="n">${n}</td><td>${l}</td><td>${v}</td></tr>`;
+const r=(n,l,v)=>`<tr><td class="n">${n}</td><td>${l}</td><td colspan="2">${v}</td></tr>`;
 $('paper').className='';$('paper').innerHTML=`<div class="sheet"><div class="in">${kop(c)}
 <table class="mt"><tr><td>Lembar ke</td><td>: ${esc(s.lbr)}</td></tr><tr><td>Kode No.</td><td>: ${esc(s.kode)}</td></tr><tr><td>Nomor</td><td>: ${esc(s.nomor)}</td></tr></table>
 <h3>SURAT PERINTAH PERJALANAN DINAS</h3>
-<table class="f"><colgroup><col style="width:34px"><col style="width:42%"><col></colgroup>
+<table class="f" style="table-layout:fixed"><colgroup><col style="width:34px"><col style="width:42%"><col style="width:29%"><col></colgroup>
 ${r('1.','Pejabat Pembuat Komitmen',esc(s.ppk))}
 ${r('2.','Nama/NIP Pegawai yang melaksanakan perjalanan dinas',esc(p.nama)+'<br>'+esc(p.nip))}
-${r('3.','a. Pangkat dan Golongan',esc(p.pang))}<tr><td></td><td>b. Jabatan/ Instansi</td><td>${esc(p.jab)}</td></tr><tr><td></td><td>c. Tingkat Biaya Perjalanan Dinas</td><td>${esc(s.biaya)}</td></tr>
+${r('3.','a. Pangkat dan Golongan',esc(p.pang))}<tr><td></td><td>b. Jabatan/ Instansi</td><td colspan="2">${esc(p.jab)}</td></tr><tr><td></td><td>c. Tingkat Biaya Perjalanan Dinas</td><td colspan="2">${esc(s.biaya)}</td></tr>
 ${r('4.','Maksud Perjalanan Dinas',esc(s.maksud))}
 ${r('5.','Alat angkutan yang dipergunakan',esc(s.alat))}
 ${r('6.','a. Tempat berangkat<br>b. Tempat Tujuan',esc(s.asal)+'<br>'+esc(s.tuju))}
 ${r('7.','a. Lamanya Perjalanan Dinas<br>b. Tanggal berangkat<br>c. Tanggal harus kembali/tiba di Tempat baru*',days+' Hari<br>'+tgl(s.tb)+'<br>'+tgl(s.tk))}
-<tr><td class="n">8.</td><td colspan="2" style="padding:0"><table class="f" style="border:0"><colgroup><col style="width:42%"><col style="width:36%"><col></colgroup><tr><th style="text-align:left;border-left:0;border-top:0">Pengikut : <span style="margin-left:24px">Nama</span></th><th style="border-top:0">Tanggal Lahir</th><th style="border-right:0;border-top:0">Keterangan</th></tr>${rows.replace(/<tr>/g,'<tr>')}</table></td></tr>
+<tr><td class="n" rowspan="${Math.max(ik.length,5)+1}">8.</td><th style="text-align:left">Pengikut : <span style="margin-left:24px">Nama</span></th><th>Tanggal Lahir</th><th>Keterangan</th></tr>${rows}
 ${r('9.','Pembebanan Anggaran :<br>a. Instansi<br>b. Kode Rekening','<br>'+esc(s.ang)+'<br>'+esc(s.rek))}
 ${r('10.','Keterangan lain-lain',esc(s.ket)||'&nbsp;')}</table>
 <table style="width:100%;margin-top:6px"><tr><td style="vertical-align:top;width:45%">*)Coret yang tidak perlu</td><td><table><tr><td>Dikeluarkan di</td><td>: ${esc(s.dkdi)}</td></tr><tr><td>Tanggal</td><td>: ${tgl(s.dktg)}</td></tr><tr><td colspan="2">${esc(jl)},<br><br><br><br><u><b>${esc(sg.nama)||'..............................'}</b></u><br>${esc(sg.pang)}<br>${sg.nip?'NIP. '+esc(sg.nip):''}</td></tr></table></td></tr></table></div></div>
